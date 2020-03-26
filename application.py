@@ -31,20 +31,20 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from db_model import Base, User, Course, Categories
 
 app = Flask(__name__)
+app.secret_key = "some-secret-key"
 auth = HTTPTokenAuth(scheme='Token')
 
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 
-engine = create_engine('sqlite:///catalogue.db',
-                       connect_args={'check_same_thread': False})
+# engine = create_engine('sqlite:///catalogue.db',
+#                        connect_args={'check_same_thread': False})
+engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # This decorator checks if the user is logged or not
-
-
 def login_required(f):
     @wraps(f)
     def x(*args, **kwargs):
@@ -56,7 +56,6 @@ def login_required(f):
 
 
 @app.route('/')
-@app.route('/coursecatalogue/')
 def index():
     categories = session.query(Categories).all()
     courses = session.query(Course).order_by(Course.title.desc()).limit(10).all()
@@ -291,5 +290,4 @@ def deleteCourse(course_category, course_title):
 
 if __name__ == '__main__':
     app.debug = True
-    app.secret_key = "some-secret-key"
     app.run(host='0.0.0.0', port=8000)
