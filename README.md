@@ -33,6 +33,7 @@ Navigate the app by going to https://localhost:8000
 
 ## Ackowledgement:
 
-I'd like to acknowledge Udacity as most of the processes I followed are based on the lectures. 
+I'd like to acknowledge Udacity as most of the processes I followed are based on the lectures. And also the friends and mentors who were always eager to help and support!
+
 I also made use of Bootstrap for the CSS
 
