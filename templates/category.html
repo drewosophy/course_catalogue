@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ category.name }}
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-6">{{ category.name }} category</h1>
+  <p class="lead">
+      Below is a list courses under {{ category.name }} category:
+    </p> 
+    <ul>
+      {% for course in courses %}
+      <li> 
+        <p>
+          {{ course.title }}
+          <br>
+          <a href='{{url_for('coursePage', course_category = category.name, course_title = course.title ) }}'>View</a> 
+          |
+          {% if 'user_id' in session %}
+          <a href='{{url_for('editCourse', course_category = category.name, course_title = course.title ) }}'>Edit</a> |
+          <a href='{{url_for('deleteCourse', course_category = category.name, course_title = course.title  ) }}'>Delete</a>
+          {% endif %}
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+  <hr class="my-4">
+</div>
+{% endblock %}

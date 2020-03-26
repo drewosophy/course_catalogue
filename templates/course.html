@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ course.title }}
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-6">
+  Welcome to {{ course.title }} course by {{ course.creator.name }}  
+  </h1>
+  <p class="lead">
+    {{ course.description }}
+  </p>
+  <p>
+    Category: <a href="{{url_for('categoryPage', course_category = category.name) }}">{{ category.name }}</a>
+    <br>
+    Duration: {{ course.duration }}
+    <br>
+    {% if 'user_id' in session %}
+    <a href='{{url_for('editCourse', course_category = category.name, course_title = course.title) }}'>Edit</a> |
+    <a href = '{{url_for('deleteCourse', course_category = category.name, course_title = course.title  ) }}'>Delete</a>
+    {% endif %}
+  </p>
+  <hr class="my-4">
+</div>
+{% endblock %}

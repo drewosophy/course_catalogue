@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+Delete {{ course.title }}
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-6">
+  Are you sure you want to delete {{ course.title }} course?
+  </h1>
+  <form action="{{url_for('deleteCourse', course_category = category.name, course_title = course.title) }}" 
+  method="POST" style="display: inline;">
+  <p class="lead">
+    <a class="btn btn-secondary btn-lg" href='{{url_for('coursePage', course_category = category.name, course_title = course.title  ) }}'>No</a> | 
+    
+      <button type="submit" class="btn btn-danger btn-lg">
+        Yes
+      </button>
+    </p>
+  </form>
+  <hr class="my-4">
+</div>
+{% endblock %}

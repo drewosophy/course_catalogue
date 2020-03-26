@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-5">Login to Catalogue Project!</h1>
+  <p class="lead">
+      You will have access to all the features of the site.
+    </p>  
+  <hr class="my-4">
+  
+  <div id="loginBtn">
+    <div class="g-signin2" data-onsuccess="loginCb"></div>
+  </div>
+  <div id="result"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function loginCb(result) {
+  const id_token = result.getAuthResponse().id_token
+  if (id_token) {
+    // Hide the sign-in button now that the user is authorized
+    $('#loginBtn').attr('style', 'display: none');
+    // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to home page
+    $.ajax({
+      type: 'POST',
+      url: '/google-auth?state={{cur_state}}',
+      processData: false,
+      data: result.getAuthResponse().id_token,
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        // Handle or verify the server response if necessary.
+        if (result) {
+          $('#result').html('Login Successful!</br>' + '</br>Redirecting...')
+         setTimeout(function() {
+          window.location.href = "/";
+         }, 3000);
+          
+        } else if (result['error']) {
+        console.log('There was an error: ' + result['error']);
+        } else {
+          $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+        }
+    }
+    }); 
+  } 
+}
+</script>
+{% endblock %}

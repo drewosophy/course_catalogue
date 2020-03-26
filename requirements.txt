@@ -1,0 +1,6 @@
+flask
+flask_httpauth
+sqlalchemy
+httplib2
+requests
+google-auth

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="bgimg">
+    <div class= "herotext">
+    <h1 class="display-4">Welcome to your Course Catalogue</h1>
+    </div>
+  </div>  
+<div class="jumbotron">
+  <p class="lead">
+      Explore course categories
+    </p>  
+  <hr class="my-4">
+  <ul class="list-group list-group-horizontal-lg">
+    {% for category in categories %}
+    <li class="list-group-item"> <a href="{{url_for('categoryPage', course_category = category.name) }}"> <h5>{{category.name}} </h5></a></li>
+    {% endfor %}
+    </ul>
+</br>
+</br>
+    <p class="lead"> See the latest courses here </p>
+</br>
+    <ul class="list-group">
+        {% for course in courses %}
+        <li class="list-group-item"> <a href="{{url_for('coursePage', course_category = course.category.name, course_title = course.title) }}">{{course.title }} (<i>{{ course.category.name}}</i>) </a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
