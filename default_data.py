@@ -5,7 +5,8 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 from database_setup import Base, User, Course, Categories
 
-engine = create_engine('sqlite:///catalogue.db')
+# engine = create_engine('sqlite:///catalogue.db')
+engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
@@ -56,8 +57,8 @@ default_Course = Course(
         picture="https://www.bestsoccerbuys.com/content/images/thumbs/0000447_classic-collection-soccer-ball-black-white-butyl-bladder-japanese-pu-cover.jpeg",
         duration="3 months",
         description="Whether you're vegan or simply exploring, this course will help you make an amazing meatless steak burger!",
-        category_ref=defaultCat4.name,
-        creator_ref=1
+        category_ref=defaultCat4.id,
+        creator_ref=defaultUser.id
         )
 session.add(default_Course)
 
